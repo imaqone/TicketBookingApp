@@ -1,2 +1,0 @@
-# TicketBookingApp
-Project of database
