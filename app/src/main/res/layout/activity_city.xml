@@ -4,12 +4,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CityActivity">
-
-    <CalendarView
-        android:id="@+id/calendarView2"
-        android:layout_width="349dp"
-        android:layout_height="385dp"
-        tools:layout_editor_absoluteX="31dp"
-        tools:layout_editor_absoluteY="91dp" />
-</android.support.constraint.ConstraintLayout>
+    tools:context=".CityActivity"/>
