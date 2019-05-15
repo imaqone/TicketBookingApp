@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,10 +32,12 @@ public class MainActivity extends AppCompatActivity implements
         MainFragment.OnFragmentInteractionListener, OrderFragment.OnListFragmentInteractionListener, personFragment.OnFragmentInteractionListener {
     private ViewPager viewPager;
     private List<Fragment> fragmentList;
+
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item){
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
 
     }
+
     @Override
     public void onFragmentInteraction(Uri uri) {
         //you can leave it empty
@@ -84,7 +87,31 @@ public class MainActivity extends AppCompatActivity implements
 
     public void clickCity(View view) {
         Intent intent1 = new Intent(this, CityActivity.class);
-        startActivity(intent1);
+//        startActivity(intent1);
+//        TextView textView=findViewById(R.id.textView_setCity1);
+//        textView.setText(intent1.getStringExtra(CityActivity.GET_CITY));
+//        textView.setText("南宁");
+        startActivityForResult(intent1, 1);
+    }
+
+    public void clickCity2(View view) {
+        Intent intent2 = new Intent(this,CityActivity.class);
+        startActivityForResult(intent2,2);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 3) {
+
+            String result = data.getStringExtra("result");
+            TextView textView = findViewById(R.id.textView_setCity1);
+            textView.setText(result);
+        }else if(requestCode == 2 && resultCode == 3){
+            String result = data.getStringExtra("result");
+            TextView textView = findViewById(R.id.textView_setCity2);
+            textView.setText(result);
+        }
     }
 
     Calendar ca = Calendar.getInstance();
@@ -110,8 +137,9 @@ public class MainActivity extends AppCompatActivity implements
         datePickerDialog.show();
 
     }
-    public void loginClick(View view){
-        Intent intent=new Intent(this, LoginActivity.class);
+
+    public void loginClick(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

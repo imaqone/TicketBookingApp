@@ -23,7 +23,7 @@
         android:id="@+id/textView_setCity1"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="112dp"
         android:layout_marginTop="100dp"
         android:clickable="true"
         android:focusable="true"
@@ -38,20 +38,20 @@
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_marginTop="100dp"
-        android:layout_marginEnd="88dp"
-        android:onClick="clickCity"
+        android:layout_marginEnd="72dp"
+        android:onClick="clickCity2"
         android:text="@string/city_text"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/TcketSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
         android:layout_marginTop="200dp"
-        android:text="Button"
+        android:text="火车票查询"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,7 +64,7 @@
         android:clickable="true"
         android:onClick="clickTime"
         android:text="@string/setTime"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/TcketSearch"
         app:layout_constraintStart_toStartOf="parent" />
 
     <!--<android.support.v4.view.ViewPager-->
