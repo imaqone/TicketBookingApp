@@ -28,14 +28,14 @@ public class CityActivity extends AppCompatActivity {
             @Override
             public void SearchAciton(String string) {
                 servlet servlet=new servlet();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        servlet.sendRequest("city",string);
-
-                    }
-                }).start();
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+////                        servlet.sendRequest("city",string);
+//
+//                    }
+//                }).start();
                 Intent intent=new Intent();
                 intent.putExtra("result",string);
                 setResult(3,intent);
