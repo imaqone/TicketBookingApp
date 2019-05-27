@@ -31,7 +31,7 @@ import com.example.ordersystem.*;
 import com.example.ordersystem.dummy.DummyContent;
 import com.example.ordersystem.servlet.requestTicket;
 import com.example.ordersystem.servlet.servlet;
-import com.example.ordersystem.ui.login.LoginActivity;
+//import com.example.ordersystem.ui.login.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -197,8 +197,9 @@ public class MainActivity extends AppCompatActivity implements
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Map<String,String[]> map=new HashMap<>();
-                map.put("ticket",message);
+                Map map=new HashMap<>();
+                map.put("messageType","ticket");
+                map.put("message",message);
                 JSONObject jsonObject=new JSONObject(map);
                 String jsonString=jsonObject.toString();
                 RequestBody body=RequestBody.create(FORM_CONTENT_TYPE,jsonString);
