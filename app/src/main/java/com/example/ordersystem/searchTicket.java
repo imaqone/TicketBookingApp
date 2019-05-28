@@ -39,6 +39,7 @@ public class searchTicket extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Intent intent2=new Intent(searchTicket.this,fillOrder.class);
                 intent2.putExtra("passToOrder",res);
                 intent2.putExtra("departDate",DepartDate);

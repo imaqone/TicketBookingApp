@@ -1,5 +1,7 @@
 package com.example.ordersystem.dummy;
 
+import com.example.ordersystem.requestOrder;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,28 +18,29 @@ public class DummyContent {
     /**
      * An array of sample (dummy) items.
      */
-    public static final List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+    public static final List<requestOrder> ITEMS = new ArrayList<>();
 
     /**
      * A map of sample (dummy) items, by ID.
      */
-    public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
+    public static final Map<String, requestOrder> ITEM_MAP = new HashMap<String, requestOrder>();
 
-    private static final int COUNT = 25;
+//    private static final int COUNT = 25;
 
     static {
         // Add some sample items.
-        for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyItem(i));
-        }
+//        for (int i = 1; i <= COUNT; i++) {
+//            addItem(createDummyItem(i));
+//        }
+
     }
 
-    private static void addItem(DummyItem item) {
+    public static void addItem(requestOrder item) {
         ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+        ITEM_MAP.put(item.trainNum, item);
     }
 
-    private static DummyItem createDummyItem(int position) {
+    public static DummyItem createDummyItem(int position) {
         return new DummyItem(String.valueOf(position), "Item " + position, makeDetails(position));
     }
 

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,8 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ordersystem.SQLite.SQLiteHelper;
+import com.example.ordersystem.dummy.DummyContent;
+import com.example.ordersystem.servlet.responeTicket;
 import com.example.ordersystem.servlet.servlet;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -101,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                             });
                             MainActivity.LoganUserName=username;
                             MainActivity.LoginOrNot=true;
+//                            setOrder(username);
                             finish();
                         } else {
                             runOnUiThread(new Runnable() {
@@ -123,11 +129,65 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, registerActivity.class);
         startActivity(intent);
     }
-//    public void setLoginStatus(){
-//        try{
-//
-//        }
-//    }
+    public void setOrder(String account){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Map map = new HashMap<>();
+                map.put("messageType", "requestOrder");
+                String []temp={account};
+                map.put("message", temp);
+                JSONObject jsonObject = new JSONObject(map);
+                String jsonString = jsonObject.toString();
+                RequestBody body = RequestBody.create(FORM_CONTENT_TYPE, jsonString);
+                okhttpClient = new OkHttpClient();
+                final Request request = new Request.Builder()
+                        .url(serviceURL)
+                        .post(body)
+                        .build();
+                Call call = okhttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        System.out.println("连接失败");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(LoginActivity.this, "连接服务失败，请联系管理员", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        e.printStackTrace();
+                    }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        System.out.println("登录数据库连接成功");
+                        String res = response.body().string();
+                        System.out.println(res);
+                        RecyclerView recyclerView=findViewById(R.id.list);
+                        try{
+                            JSONArray jsonAllTicket=new JSONArray(res);
+                            for(int i=0;i<jsonAllTicket.length();i++){
+                                JSONObject SingleTicket=jsonAllTicket.getJSONObject(i);
+                                String DepartStation=SingleTicket.getString("DepartStation");
+                                String ArriveStation=SingleTicket.getString("ArriveStation");
+                                String DepartTime=SingleTicket.getString("DepartTime");
+                                String ArriveTime=SingleTicket.getString("ArriveTime");
+                                String TrainNum=SingleTicket.getString("TrainNum");
+                                String DepartDate=SingleTicket.getString("DepartDate");
+                                requestOrder responeOrder=new requestOrder(DepartStation,ArriveStation,TrainNum,DepartDate,DepartTime,ArriveTime);
+                                DummyContent.addItem(responeOrder);
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                        recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, null));
+                    }
+                });
+//                String res = servlet.returnResult();
+//                System.out.println(res);
+            }
+        }).start();
+    }
 
 
 }
