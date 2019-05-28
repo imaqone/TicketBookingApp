@@ -21,12 +21,15 @@ public class searchTicket extends AppCompatActivity {
     private ListView mListView;
     private ArrayList<responeTicket>mdata=new ArrayList<>();
     private itemTicketAdater itemTicketAdater;
+    private String DepartDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        System.out.println("!!!!!");
         setContentView(R.layout.activity_search_ticket);
-        String res=getIntent().getStringExtra("ticket");
+        Intent intent=getIntent();
+        String res=intent.getStringExtra("ticket");
+        DepartDate=intent.getStringExtra("departDate");
 //        System.out.println(res);
         getTicket(res);
         mListView=findViewById(R.id.ticketlist);
@@ -36,9 +39,12 @@ public class searchTicket extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(searchTicket.this,fillOrder.class);
-                intent.putExtra("passToOrder",res);
-                startActivity(intent);
+                Intent intent2=new Intent(searchTicket.this,fillOrder.class);
+                intent2.putExtra("passToOrder",res);
+                intent2.putExtra("departDate",DepartDate);
+                intent2.putExtra("index",String.valueOf(position));
+//                System.out.println(position);
+                startActivity(intent2);
             }
         });
     }

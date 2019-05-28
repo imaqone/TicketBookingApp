@@ -99,7 +99,8 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                                 }
                             });
-
+                            MainActivity.LoganUserName=username;
+                            MainActivity.LoginOrNot=true;
                             finish();
                         } else {
                             runOnUiThread(new Runnable() {

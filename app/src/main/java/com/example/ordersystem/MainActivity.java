@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements
 //    private requestTicket requestTicket;
 //    private String DepartCity=null;
 //    private String ArriveCity=null;
+    public static boolean LoginOrNot=false;
+    public static String LoganUserName=null;
     private String DepartDate=null;
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
@@ -230,6 +232,7 @@ public class MainActivity extends AppCompatActivity implements
                         System.out.println("连接成功");
                         String res=response.body().string();
                         intent.putExtra("ticket",res);
+                        intent.putExtra("departDate",DepartDate);
                         startActivity(intent);
                     }
                 });
