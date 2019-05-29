@@ -13,7 +13,23 @@ import android.view.ViewGroup;
 import com.example.ordersystem.dummy.DummyContent;
 import com.example.ordersystem.dummy.DummyContent.DummyItem;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * A fragment representing a list of Items.
@@ -22,9 +38,14 @@ import java.util.List;
  * interface.
  */
 public class OrderFragment extends Fragment {
-
+    private static OkHttpClient okhttpClient;
+    private static String serviceURL = "http://10.21.105.141:8080/TomcatTest/servletTest";
+    public static final MediaType FORM_CONTENT_TYPE
+            = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8"); //设置编码格式为UTF-8
+    private boolean isCreated;
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static MyItemRecyclerViewAdapter myItemRecyclerViewAdapter;
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
@@ -49,7 +70,7 @@ public class OrderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        isCreated=true;
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -69,7 +90,8 @@ public class OrderFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            myItemRecyclerViewAdapter=new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener);
+            recyclerView.setAdapter(myItemRecyclerViewAdapter);
         }
         return view;
     }
@@ -105,5 +127,16 @@ public class OrderFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(DummyItem item);
+    }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isCreated){
+            return;
+        }else {
+            System.out.println("hello,hello");
+//            DummyContent.update(myItemRecyclerViewAdapter);
+            myItemRecyclerViewAdapter.notifyDataSetChanged();
+        }
     }
 }
